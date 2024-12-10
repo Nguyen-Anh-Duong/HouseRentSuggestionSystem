@@ -23,7 +23,11 @@ var sequelize = new Sequelize({
 
 sequelize
   .authenticate()
-  .then(() => console.log("Connection has been established successfully."))
+  .then(() => {
+    console.log("Connection has been established successfully.");
+    return sequelize.sync({ force: false });
+  })
+  .then(() => console.log("Database synchronized."))
   .catch((error) => console.error("Unable to connect to the database:", error));
 
 module.exports = sequelize;
