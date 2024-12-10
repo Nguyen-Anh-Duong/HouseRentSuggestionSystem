@@ -1,6 +1,7 @@
 var { DataTypes } = require("sequelize");
 var sequelize = require("../database/connect.db");
 var Location = require("./location.model");
+var RentInfor = require("./rentInfor.model");
 
 var Room = sequelize.define("Room", {
   id: {
@@ -13,8 +14,8 @@ var Room = sequelize.define("Room", {
     allowNull: true,
   },
   area: {
-    type: DataTypes.STRING,
-    allowNull: false,
+    type: DataTypes.INTEGER,
+    //allowNull: false,
   },
   max_people: {
     type: DataTypes.INTEGER,
@@ -23,6 +24,13 @@ var Room = sequelize.define("Room", {
     type: DataTypes.INTEGER,
     references: {
       model: Location,
+      key: "id",
+    },
+  },
+  rent_infor_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: RentInfor,
       key: "id",
     },
   },
