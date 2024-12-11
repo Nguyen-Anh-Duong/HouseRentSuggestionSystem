@@ -23,10 +23,10 @@ const Location = sequelize.define("Location", {
     type: DataTypes.STRING,
   },
   latitude: {
-    type: DataTypes.DECIMAL(10, 6),
+    type: DataTypes.DECIMAL(20, 15),
   },
   longitude: {
-    type: DataTypes.DECIMAL(10, 6),
+    type: DataTypes.DECIMAL(20, 15),
   },
 });
 
