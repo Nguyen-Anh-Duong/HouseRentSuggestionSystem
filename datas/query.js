@@ -41,3 +41,41 @@ INSERT INTO images (id, room_id, image) VALUES
 (3, 3, NULL),
 (4, 4, NULL);
 `;
+
+const fs = require("fs/promises");
+const path = require("path");
+const sequelize = require("../database/connect.db"); // Kết nối Sequelize
+const User = require("../models/user.model"); // Model Sequelize của bảng User
+
+const seedData = async () => {
+  try {
+    // Đọc file JSON
+    const filePath = path.join(__dirname, "user.json");
+    const data = await fs.readFile(filePath, "utf8");
+
+    // Chuyển đổi JSON sang JavaScript Object
+    const users = await JSON.parse(data);
+
+    // Đồng bộ lại bảng User (nếu cần)
+    await sequelize.sync({ force: true });
+
+    // Chèn dữ liệu từ JSON vào bảng User
+    await User.bulkCreate(users);
+
+    console.log("Data has been inserted successfully.");
+  } catch (error) {
+    console.error("Error while seeding data:", error);
+  }
+};
+
+// Gọi hàm seedData
+//(async () => await seedData())();
+
+const locationData = JSON.parse(fs.readFileSync("locationData.json", "utf8"));
+const rentData = JSON.parse(fs.readFileSync("rentData.json", "utf8"));
+const featureData = JSON.parse(fs.readFileSync("featureData.json", "utf8"));
+const roomData = JSON.parse(fs.readFileSync("roomData.json", "utf8"));
+
+await Location.bulkCreate(locationData);
+await RentInfo.bulkCreate(rentData);
+await FeatureInfo.bulkCreate(featureData);
