@@ -3,16 +3,13 @@ var sequelize = require("../database/connect.db");
 var Location = require("./location.model");
 var RentInfor = require("./rentInfor.model");
 var FeatureInfor = require("./featureInfor.model");
+const User = require("./user.model");
 
-var Room = sequelize.define("Room", {
+var Room = sequelize.define("room", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
-  },
-  image: {
-    type: DataTypes.BLOB,
-    allowNull: true,
   },
   area: {
     type: DataTypes.INTEGER,
@@ -27,6 +24,7 @@ var Room = sequelize.define("Room", {
       model: Location,
       key: "id",
     },
+    unique: true,
   },
   rent_infor_id: {
     type: DataTypes.INTEGER,
@@ -34,11 +32,20 @@ var Room = sequelize.define("Room", {
       model: RentInfor,
       key: "id",
     },
+    unique: true,
   },
   feature_infor_id: {
     type: DataTypes.INTEGER,
     references: {
       model: FeatureInfor,
+      key: "id",
+    },
+    unique: true,
+  },
+  owner_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: User,
       key: "id",
     },
   },

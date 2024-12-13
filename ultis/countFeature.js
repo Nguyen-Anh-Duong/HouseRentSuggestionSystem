@@ -1,7 +1,11 @@
-const countFeature = function (availableFeature, requireFeature) {
+const countMatchingFeatures = function (room, requireFeature) {
   let count = 0;
-  requireFeature.map((e) => (availableFeature.includes(e) ? count++ : count));
+  for (const key in requireFeature) {
+    if (requireFeature[key] == true) {
+      room[key] == true ? count++ : count;
+    }
+  }
   return count;
 };
 
-module.exports = countFeature;
+module.exports = countMatchingFeatures;

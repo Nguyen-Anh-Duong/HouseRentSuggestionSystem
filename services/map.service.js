@@ -7,11 +7,13 @@ const getLocation = async function (address) {
   const data = await response.json();
 
   const { lat, lng } = data.results[0].geometry.location;
+  const province = data.results[0].compound.province;
 
-  return { latitude: lat, longitude: lng };
+  return { latitude: lat, longitude: lng, city: province };
 };
 
-const distance = async function (origin, destination) {
+const calculateDistance = async function (origin, destination) {
+  //console.log({ origin, destination });
   const response = await fetch(
     `https://rsapi.goong.io/direction?origin=${origin.latitude},${origin.longitude}&destination=${destination.latitude},${destination.longitude}&api_key=${api_key}`
   );
@@ -21,4 +23,4 @@ const distance = async function (origin, destination) {
   return data.routes[0].legs[0].distance.value;
 };
 
-module.exports = { getLocation, distance };
+module.exports = { getLocation, calculateDistance };

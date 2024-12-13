@@ -9,8 +9,8 @@ var sequelize = new Sequelize({
   password: process.env.DB_PASSWORD || "123456",
   port: process.env.DB_PORT || 3306,
   define: {
-    timestamps: true,
-    underscored: true,
+    freezeTableName: true,
+    timestamps: false,
   },
   logging: false,
   pool: {
@@ -27,7 +27,9 @@ sequelize
     console.log("Connection has been established successfully.");
     return sequelize.sync({ force: false });
   })
-  .then(() => console.log("Database synchronized."))
+  .then(() => {
+    console.log("Database synchronized.");
+  })
   .catch((error) => console.error("Unable to connect to the database:", error));
 
 module.exports = sequelize;

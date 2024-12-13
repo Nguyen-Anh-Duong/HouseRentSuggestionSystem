@@ -1,34 +1,34 @@
 var { DataTypes } = require("sequelize");
 var sequelize = require("../database/connect.db");
 
-var FeatureInfor = sequelize.define("FeatureInfor", {
+var FeatureInfor = sequelize.define("feature_infor", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  has_air_conditioner: {
+  toilet: {
     type: DataTypes.BOOLEAN,
   },
-  has_car_park: {
+  conditioner: {
     type: DataTypes.BOOLEAN,
   },
-  has_private_bathroom: {
+  furniture: {
     type: DataTypes.BOOLEAN,
   },
-  has_balcony: {
+  waterHeater: {
     type: DataTypes.BOOLEAN,
   },
-  has_laundry: {
+  wifi: {
     type: DataTypes.BOOLEAN,
   },
-  has_kitchen: {
+  kitchen: {
     type: DataTypes.BOOLEAN,
   },
-  has_wifi: {
+  park: {
     type: DataTypes.BOOLEAN,
   },
-  has_pet_allowed: {
+  separate: {
     type: DataTypes.BOOLEAN,
   },
 });

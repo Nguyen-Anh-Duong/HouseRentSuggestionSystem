@@ -1,7 +1,7 @@
 var { DataTypes } = require("sequelize");
 var sequelize = require("../database/connect.db");
 
-const Location = sequelize.define("Location", {
+const Location = sequelize.define("location", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -19,7 +19,7 @@ const Location = sequelize.define("Location", {
   street: {
     type: DataTypes.STRING,
   },
-  house_number: {
+  detail_address: {
     type: DataTypes.STRING,
   },
   latitude: {

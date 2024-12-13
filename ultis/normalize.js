@@ -1,21 +1,23 @@
-const { distance } = require("../services/map.service");
-const countFeature = require("./countFeature");
+const { calculateDistance } = require("../services/map.service");
+const countMatchingFeatures = require("./countFeature");
 
-const normalize = async function (suggestRoom, origin, requireFeature) {
-  const updateDistance = await Promise.all(
-    suggestRoom.map(async (room, index) => {
-      const dist = await distance(origin, room.address);
+//chuan hoa mot so gia tri
+const normalizeRooms = async function (rooms, userLocation, requiredFeatures) {
+  const normalizedRooms = await Promise.all(
+    rooms.map(async (room) => {
+      const roomDistance = await calculateDistance(userLocation, {
+        latitude: room.latitude,
+        longitude: room.longitude,
+      });
+      const feature_satisfied = countMatchingFeatures(room, requiredFeatures);
       return {
         ...room,
-        distance: dist,
-        feature_satisfied:
-          !requireFeature || !requireFeature.length
-            ? suggestRoom[index].feature.length
-            : countFeature(suggestRoom[index].feature, requireFeature),
+        distance: roomDistance,
+        feature_satisfied,
       };
     })
   );
-  return updateDistance;
+  return normalizedRooms;
 };
 
-module.exports = normalize;
+module.exports = normalizeRooms;

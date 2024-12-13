@@ -1,24 +1,23 @@
 var express = require("express");
 var router = express.Router();
-const mockRooms = require("../sampleDatas/sampleRoomData");
 const { getLocation } = require("../services/map.service");
-const normalize = require("../ultis/normalize");
-const promethee = require("../ultis/promethee");
+const normalizeRooms = require("../ultis/normalize");
+const calculatePromethee = require("../ultis/promethee");
+const getRooms = require("../services/suggest.service");
 
 router.get("/suggestion", async function (req, res, next) {
-  const { price, area, max_people, address, feature } = req.body;
-  // feature la dich vu ma nguoi dung yeu cau
+  const { price, area, max_people, address, features, weight } = req.body;
 
-  /*   // goi ham query
-  const suggestion = ... */
-  const { latitude, longitude } = await getLocation(address);
-  const suggestRoom = await normalize(
-    mockRooms,
+  const { latitude, longitude, city } = await getLocation(address);
+  const queryRoom = await getRooms(price, city);
+
+  const norRoom = await normalizeRooms(
+    queryRoom,
     { latitude, longitude },
-    feature
+    features
   );
 
-  const data = promethee(suggestRoom);
+  const data = calculatePromethee(norRoom, weight);
 
   res.json(data);
 });

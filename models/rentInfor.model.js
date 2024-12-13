@@ -1,7 +1,7 @@
 var { DataTypes } = require("sequelize");
 var sequelize = require("../database/connect.db");
 
-var RentInfor = sequelize.define("RentInfor", {
+var RentInfor = sequelize.define("rent_infor", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -10,8 +10,8 @@ var RentInfor = sequelize.define("RentInfor", {
   price: {
     type: DataTypes.INTEGER,
   },
-  security_deposit: {
-    type: DataTypes.INTEGER,
+  description: {
+    type: DataTypes.STRING,
   },
   electricity_price: {
     type: DataTypes.INTEGER,
