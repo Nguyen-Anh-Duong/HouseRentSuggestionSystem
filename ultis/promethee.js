@@ -4,19 +4,33 @@ const Vtype = function (a, b, q) {
   else return 1;
 };
 
-const Usualtype = function (a, b, direction) {
+const Binary = function (a, b) {
   if (a - b <= 0) return 0;
   else return 1;
 };
+
+const Utype = function (a, b, q){
+  if (a - b <=q) return 0;
+  else return 1 
+}
+
+const LevelType = function(a,b){
+  if (a - b <= 0) return 0;
+  else if(a - b <= 1) return 0.25;
+  else if( a - b <= 2) return 0.5;
+  else if( a - b <= 3) return 0.75;
+  else return 1;
+}
+
 const diffFunctions = {
-  price: (a, b) => Vtype(-a, -b, 1000000), // Chênh lệch giá (giá thấp tốt hơn)
-  area: (a, b) => Vtype(a, b, 5), // Chênh lệch diện tích (diện tích lớn tốt hơn)
-  max_people: (a, b) => Usualtype(a, b), // Số người tối đa (nhiều người hơn tốt hơn)
-  distance: (a, b) => Usualtype(-a, -b), // Khoảng cách (ngắn hơn tốt hơn)
-  feature_satisfied: (a, b) => Usualtype(a, b), // Đặc điểm (được thỏa mãn nhiều hơn tốt hơn)
+  price: (a, b, q) => Vtype(-a, -b, q), // Chênh lệch giá (giá thấp tốt hơn)
+  area: (a, b) => Binary(a, b), // Chênh lệch diện tích (diện tích lớn tốt hơn)
+  max_people: (a, b) => Utype(a,b, 2), // Số người tối đa (nhiều người hơn tốt hơn)
+  distance: (a, b) => LevelType(-a,-b), // Khoảng cách (ngắn hơn tốt hơn)
+  feature_satisfied: (a, b) => Binary(a, b), // Đặc điểm (được thỏa mãn nhiều hơn tốt hơn)
 };
 
-const calculatePromethee = function (normalizedRooms, criteriaWeights) {
+const calculatePromethee = function (normalizedRooms, criteriaWeights, priceRange) {
   //số phương án
   const numOptions = normalizedRooms.length;
 
@@ -32,11 +46,14 @@ const calculatePromethee = function (normalizedRooms, criteriaWeights) {
       const preferenceScores = {};
       for (const criterion in diffFunctions) {
         // Tính mức độ khác biệt (d)
-        const difference = diffFunctions[criterion](
-          optionA[criterion],
-          optionB[criterion]
-        );
-        preferenceScores[criterion] = difference;
+        if (!(criterion != "price")){
+          const difference = diffFunctions[criterion](
+            optionA[criterion],
+            optionB[criterion]
+          );
+          preferenceScores[criterion] = difference;
+        } 
+        preferenceScores["price"](optionA["price"],optionB["price"],priceRange)
       }
       return preferenceScores;
     })

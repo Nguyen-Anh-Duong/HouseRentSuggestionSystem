@@ -5,19 +5,18 @@ const normalizeRooms = require("../ultis/normalize");
 const calculatePromethee = require("../ultis/promethee");
 const getRooms = require("../services/suggest.service");
 
-router.get("/suggestion", async function (req, res, next) {
-  const { price, area, max_people, address, features, weight } = req.body;
-
+router.post("/suggestion", async function (req, res, next) {
+  const { price_start, price_end, area, max_people, address, features, weight } = req.body;
+  const priceRange = (price_end - price_start)/2
   const { latitude, longitude, city } = await getLocation(address);
-  const queryRoom = await getRooms(price, city);
-
+  const queryRoom = await getRooms((price_start+price_end)/2, city);
   const norRoom = await normalizeRooms(
     queryRoom,
     { latitude, longitude },
     features
   );
 
-  const data = calculatePromethee(norRoom, weight);
+  const data = calculatePromethee(norRoom, weight, priceRange);
 
   res.json(data);
 });
