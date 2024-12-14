@@ -28,6 +28,8 @@ const diffFunctions = {
   max_people: (a, b) => Utype(a,b, 2), // Số người tối đa (nhiều người hơn tốt hơn)
   distance: (a, b) => LevelType(-a,-b), // Khoảng cách (ngắn hơn tốt hơn)
   feature_satisfied: (a, b) => Binary(a, b), // Đặc điểm (được thỏa mãn nhiều hơn tốt hơn)
+  electricity_price: (a, b) => Utype(-a,-b, 2000),
+  water_price: (a, b) => Utype(-a,-b, 2000)
 };
 
 const calculatePromethee = function (normalizedRooms, criteriaWeights, priceRange) {
@@ -36,11 +38,12 @@ const calculatePromethee = function (normalizedRooms, criteriaWeights, priceRang
 
   // Chỉ giữ các tiêu chí cần thiết trong `normalizedRooms`
   const decisionMatrix = normalizedRooms.map((room) => {
-    const { price, area, max_people, distance, feature_satisfied } = room;
-    return { price, area, max_people, distance, feature_satisfied };
+    const { price, area, max_people, distance, feature_satisfied, electricity_price, water_price } = room;
+    return { price, area, max_people, distance, feature_satisfied, electricity_price, water_price };
   });
 
   // Tính ma trận ưu tiên `preferenceMatrix`
+  // console.log(decisionMatrix);
   const preferenceMatrix = decisionMatrix.map((optionA) =>
     decisionMatrix.map((optionB) => {
       const preferenceScores = {};
@@ -59,6 +62,7 @@ const calculatePromethee = function (normalizedRooms, criteriaWeights, priceRang
     })
   );
 
+  // console.log(preferenceMatrix);
   // Tính ma trận ưu tiên trung bình `averagePreferenceMatrix`
   const averagePreferenceMatrix = preferenceMatrix.map((optionA) =>
     optionA.map((optionB) => {
@@ -71,10 +75,14 @@ const calculatePromethee = function (normalizedRooms, criteriaWeights, priceRang
     })
   );
 
+  
+ 
+
   // Tính các giá trị phi cộng (phiPlus)
   const phiPlus = averagePreferenceMatrix.map((preferencesForOption) =>
     preferencesForOption.reduce((total, preference) => total + preference, 0)
   );
+
 
   // Tính các giá trị phi trừ (phiMinus)
   const phiMinus = Array(numOptions).fill(0);
@@ -83,6 +91,8 @@ const calculatePromethee = function (normalizedRooms, criteriaWeights, priceRang
       phiMinus[i] += averagePreferenceMatrix[j][i];
     }
   }
+
+  // console.log(phiMinus)
 
   // Tính giá trị phi tổng hợp (phi)
   const netPhi = phiPlus.map(

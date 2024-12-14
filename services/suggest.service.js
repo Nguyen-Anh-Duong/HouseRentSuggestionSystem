@@ -34,16 +34,19 @@ const query = `
   WHERE 
       rent_infor.price BETWEEN IFNULL(:minPrice, 100000) AND IFNULL(:maxPrice, 10000000) 
       AND location.city LIKE CONCAT('%', IFNULL(:city, ''), '%')
+      AND room.area >= IFNULL(:minArea, 10) - 10
+      AND room.max_people >= IFNULL(:minMaxPeole, 100000) - 2
   GROUP BY room.id
+  ORDER BY room.area DESC
   LIMIT 50;
 `;
-const getRooms = async function (price, city) {
-  const minPrice = price - 2000000,
-    maxPrice = price + 8000000;
+const getRooms = async function (price_start, price_end, city, minArea, minMaxPeole) {
+  const minPrice = price_start;
+    maxPrice = price_end;
   city = "Hanoi";
 
   const results = await sequelize.query(query, {
-    replacements: { city, minPrice, maxPrice },
+    replacements: { city, minPrice, maxPrice, minArea, minMaxPeole },
     type: QueryTypes.SELECT,
   });
   return results;
