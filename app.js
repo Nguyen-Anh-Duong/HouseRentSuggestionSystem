@@ -32,13 +32,12 @@ const seedData = async (key,model) => {
     // Đọc file JSON
     const filePath = path.join(__dirname, "datas", key);
     const data = await fs.readFile(filePath, "utf8");
- 
+  
     // Chuyển đổi JSON sang JavaScript Object
-    const users = await JSON.parse(data);
-    console.log(data.length);
+    const users = await JSON.parse(data)
  
     // Đồng bộ lại bảng User (nếu cần)
-    await sequelize.sync({ force: true });
+    sequelize.sync({ force: false });
  
     // Chèn dữ liệu từ JSON vào bảng User
     await model.bulkCreate(users);
@@ -54,7 +53,6 @@ const dbTables = {
   "feature.json": FeatureInfor,
   "rent.json": RentInfor,
   "user.json": User,
-  "room.json": Room,
 }
 
 async function loopthru(){
@@ -63,10 +61,11 @@ async function loopthru(){
   for (const [key, model] of Object.entries(dbTables)) {
     await seedData(key, model);
   }
+  seedData("room.json", Room);
 }
 }
 
-(async () => loopthru())();
+// (async () => loopthru())();
 
 
 app.use(logger("dev"));

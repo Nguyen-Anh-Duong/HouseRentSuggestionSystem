@@ -7,6 +7,8 @@ const getRooms = require("../services/suggest.service");
 
 router.post("/suggestion", async function (req, res, next) {
   const { price_start, price_end, area, max_people, address, features, weight } = req.body
+
+  console.log(req.body)
   // {
   //   "price_start": 0,
   //   "price_end": 3000000,
@@ -28,12 +30,13 @@ router.post("/suggestion", async function (req, res, next) {
   const priceRange = (price_end - price_start)/2
   const { latitude, longitude, city } = await getLocation(address);
   const queryRoom = await getRooms(price_start, price_end, city, area, max_people);
+  console.log(queryRoom);
   const norRoom = await normalizeRooms(
     queryRoom,
     { latitude, longitude },
     features
   );
-  // console.log(norRoom)
+  console.log(norRoom)
   const data = calculatePromethee(norRoom, weight, priceRange);
   console.log(data)
   res.json(data);

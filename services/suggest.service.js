@@ -38,13 +38,11 @@ const query = `
       AND room.max_people >= IFNULL(:minMaxPeole, 100000) - 2
   GROUP BY room.id
   ORDER BY room.area DESC
-  LIMIT 50;
+  LIMIT 5;
 `;
 const getRooms = async function (price_start, price_end, city, minArea, minMaxPeole) {
   const minPrice = price_start;
     maxPrice = price_end;
-  city = "Hanoi";
-
   const results = await sequelize.query(query, {
     replacements: { city, minPrice, maxPrice, minArea, minMaxPeole },
     type: QueryTypes.SELECT,
