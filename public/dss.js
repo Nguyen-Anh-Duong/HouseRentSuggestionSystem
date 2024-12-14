@@ -30,6 +30,7 @@ $(function () {
     })
 
     $('#submit').click(async function(){
+        $('#solution').css('display','none');
         
         try{
             const response = await fetch("http://localhost:3000/suggestion", 
@@ -58,6 +59,7 @@ $(function () {
                     })
                 });
             const data = await response.json()
+            console.log(data)
             
             var decisionMatrix = data.decisionMatrix
             var preferenceMatrix = data.preferenceMatrix
@@ -128,8 +130,8 @@ $(function () {
             $('#table1').append(priceHtml)
             $('#table2').append(areaHtml)
             $('#table3').append(maxPeopleHtml)
-            $('#table4').append(distanceHtml)
-            $('#table5').append(featureHtml)
+            $('#table4').append(featureHtml)
+            $('#table5').append(distanceHtml)
             $('#table6').append(areaHtml)
             $('#table7').append(areaHtml)
 
@@ -166,21 +168,7 @@ $(function () {
                     }
                   }
                 }
-              });
-
-            var t0 = '<tr><td></td>'
-            var t1 = '<tr><td>Dòng hơn cấp dương</td>'
-            var t2 = '<tr><td>Dòng hơn cấp âm</td>'
-            var t3 = '<tr><td>Dòng hơn cấp chung</td>'
-
-            for (var i = 0; i < phi.phiPlus.length; i++){
-                t0 = t0 + '<td>Phòng ' + (i+1) + '</td>'
-                t1 = t1 + '<td>' + phi.phiPlus[i] + '</td>'
-                t2 = t2 + '<td>' + phi.phiMinus[i] + '</td>'
-                t3 = t3 + '<td>' + phi.netPhi[i] + '</td>'
-            }
-
-            $('#table9').append(t0 + '</tr>' + t1 + '</tr>' + t2 + '</tr>' + t3 + '</tr>')
+              })
 
             for (var i = 0; i < rooms.length; i ++) {
                 var room = rooms[i]
