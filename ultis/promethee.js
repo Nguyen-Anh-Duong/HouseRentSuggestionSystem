@@ -46,14 +46,14 @@ const calculatePromethee = function (normalizedRooms, criteriaWeights, priceRang
       const preferenceScores = {};
       for (const criterion in diffFunctions) {
         // Tính mức độ khác biệt (d)
-        if (!(criterion != "price")){
+        if ((criterion != "price")){
           const difference = diffFunctions[criterion](
             optionA[criterion],
             optionB[criterion]
           );
           preferenceScores[criterion] = difference;
         } 
-        preferenceScores["price"](optionA["price"],optionB["price"],priceRange)
+        preferenceScores["price"] = diffFunctions["price"](optionA["price"],optionB["price"],priceRange)
       }
       return preferenceScores;
     })

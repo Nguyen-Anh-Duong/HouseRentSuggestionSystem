@@ -10,7 +10,7 @@ html(lang='en')
       h1.text-center.m-5 Hệ thống hỗ trợ sinh viên chọn phòng trọ (PROMETHEE)
       .d-flex.justify-content-center
         .col-10
-          form.border.p-3.rounded.mb-5
+          form.border.p-3.rounded.mb-5#myForm
             h3  Nhu cầu sinh viên
             .row
               .col
@@ -75,7 +75,11 @@ html(lang='en')
                   .input-group-text
                     input#checkbox8.form-check-input.mt-0(type='checkbox', value='')
                   span.input-group-text(style='min-width: 85%;')  Không chung chủ
-            .d-flex.justify-content-center
+
+                .input-group.mb-3
+                  span.input-group-text  trọng số 
+                  input#w3.form-control(type='number', style='max-width: 15%;')
+            .d-flex.justify-content-center.mt-4
               .d-inline
                 button#reset.btn.btn-primary.m-2(type='button', style='width: 100px;')  Đặt lại 
                 button#submit.btn.btn-primary.m-2(type='button', style='width: 100px;')  Xác nhận 

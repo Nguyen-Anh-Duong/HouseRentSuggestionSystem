@@ -21,8 +21,20 @@ $(function () {
 
     var bodyAttributeMatrix = $('#bodyAttributeMatrix')
 
+    $('#reset').click( function(){
+        $('#myForm')[0].reset()
+        // price_start.val() = 0
+        // price_end.val() = 0
+        // w1.val() = 0
+        // area.val() = 0
+        // w2.val() = 0
+        // maxPeople.val() = 0
+        // w3.val() = 0
+        // adress
+    })
+
     $('#submit').click(async function(){
-        $('#solution').css('display','block');
+        
         try{
             const response = await fetch("http://localhost:3000/suggestion", 
                 {
@@ -50,10 +62,8 @@ $(function () {
                     })
                 });
             const data = await response.json()
-            console.log(data)
             
             var decisionMatrix = data.decisionMatrix
-            console.log(decisionMatrix)
             var preferenceMatrix = data.preferenceMatrix
             var rooms = data.rooms
             var phi = data.phi
@@ -138,10 +148,24 @@ $(function () {
 
             $('#table9').append(t0 + '</tr>' + t1 + '</tr>' + t2 + '</tr>' + t3 + '</tr>')
 
-            for (room in rooms) {
-                
-                $('#room') = ''
+            for (var i = 0; i < rooms.length; i ++) {
+                var room = rooms[i]
+                console.log(room)
+                htmlRoom = '<div class="row m-0 border border-5 rounded"><img src="' + room.images + '" style="width: 70%;overflow: hidden;" class="object-fit-cover p-0"><div style="width: 30%;" class="p-3">' 
+                    + 'ID phòng: ' + room.room_id + '<br>'
+                    + 'Diện tích: ' + room.area + '<br>'
+                    + 'Lượng người: ' + room.max_people + '<br>'
+                    + 'Địa chỉ: ' + room.detail_address + ', ' + room.street + ', ' + room.ward + ', ' + room.district + ', ' + room.city + ', ' + '<br>'
+                    + 'Giá thuê: ' + room.price + '<br>'
+                    + 'Giá điện: ' + room.electricity_price + '<br>'
+                    + 'Giá nước: ' + room.water_price + '<br>'
+                    + 'Tiện ích: ' 
+                    + '</div></div>'
+                    // + 'Tiện ích: ' + room. + '<br>'
+                $('#room').append(htmlRoom) 
             }
+
+            $('#solution').css('display','block');
 
         } catch (error) {
             console.log(error)
