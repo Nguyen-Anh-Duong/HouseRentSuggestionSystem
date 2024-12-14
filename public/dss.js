@@ -10,6 +10,7 @@ $(function () {
     var w3 = $('#w3')
     var adress = $('#adress')
     var w4 = $('#w4')
+    var w5 = $('#w5')
     var checkbox1 = $('#checkbox1')
     var checkbox2 = $('#checkbox2')
     var checkbox3 = $('#checkbox3')
@@ -22,15 +23,8 @@ $(function () {
     var bodyAttributeMatrix = $('#bodyAttributeMatrix')
 
     $('#reset').click( function(){
-        $('#myForm')[0].reset()
-        // price_start.val() = 0
-        // price_end.val() = 0
-        // w1.val() = 0
-        // area.val() = 0
-        // w2.val() = 0
-        // maxPeople.val() = 0
-        // w3.val() = 0
-        // adress
+        $('.reset').val('')
+        $('.resetCheck').prop('checked', false)
     })
 
     $('#submit').click(async function(){
@@ -58,7 +52,7 @@ $(function () {
                             "park": checkbox7.is(":checked"),
                             "seperate": checkbox8.is(":checked")
                         }, 
-                        "weight": [w1.val(), w2.val(), w3.val(), w4.val()]
+                        "weight": [w1.val(), w2.val(), w3.val(), w4.val(), w5.val()]
                     })
                 });
             const data = await response.json()
@@ -67,6 +61,8 @@ $(function () {
             var preferenceMatrix = data.preferenceMatrix
             var rooms = data.rooms
             var phi = data.phi
+
+            $('.resetResult').html('')
 
             for (var i = 0; i < decisionMatrix.length; i ++){
                 var html = '<tr><td>' + (i+1) + '</td>' 
@@ -79,6 +75,8 @@ $(function () {
                     + '<td>' + decisionMatrix[i].water_price + '</td>'
                 bodyAttributeMatrix.append(html)
             }
+
+            console.log(preferenceMatrix)
 
             var priceHtml = ''
             var areaHtml = ''
@@ -125,14 +123,48 @@ $(function () {
                 featureHtml = featureHtml + '</tr>'
             }
 
-            $('#table1').append(areaHtml)
+            $('#table1').append(priceHtml)
             $('#table2').append(areaHtml)
-            $('#table3').append(areaHtml)
-            $('#table4').append(areaHtml)
-            $('#table5').append(areaHtml)
+            $('#table3').append(maxPeopleHtml)
+            $('#table4').append(distanceHtml)
+            $('#table5').append(featureHtml)
             $('#table6').append(areaHtml)
             $('#table7').append(areaHtml)
-            $('#table8').append(areaHtml)
+
+            var names = [phi.phiPlus.length]
+            for (var i = 0; i < phi.phiPlus.length; i++){
+                names[i] = 'Phòng ' + (i+1)
+            }
+
+            new Chart($('#myChart'), {
+                type: 'bar',
+                data: {
+                  labels: names,
+                  datasets: [
+                    {
+                        label: 'Dòng hơn cấp Dương',
+                        data: phi.phiPlus,
+                        borderWidth: 1
+                    }, 
+                    {
+                        label: 'Dòng hơn cấp âm',
+                        data: phi.phiMinus,
+                        borderWidth: 1
+                    }, 
+                    {
+                        label: 'Dòng hơn cấp chung',
+                        data: phi.netPhi,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                  scales: {
+                    y: {
+                      beginAtZero: true
+                    }
+                  }
+                }
+              });
 
             var t0 = '<tr><td></td>'
             var t1 = '<tr><td>Dòng hơn cấp dương</td>'
@@ -150,18 +182,26 @@ $(function () {
 
             for (var i = 0; i < rooms.length; i ++) {
                 var room = rooms[i]
-                console.log(room)
-                htmlRoom = '<div class="row m-0 border border-5 rounded"><img src="' + room.images + '" style="width: 70%;overflow: hidden;" class="object-fit-cover p-0"><div style="width: 30%;" class="p-3">' 
+                var TienIch = '' 
+                    + room.toilet ? 'Vệ sinh khép kín ' : ''
+                    + room.furniture ? 'Nội thất đầy đủ ' : ''
+                    + room.waterHeater ? 'Bình nóng lạnh ' : ''
+                    + room.wifi ? 'Wifi ' : ''
+                    + room.kitchen ? 'Chỗ nấu ăn ' : ''
+                    + room.park ? 'Chỗ để xe ' : ''
+                    + room.seperate ? 'Không chung chủ ' : ''
+                    + room.conditioner ? 'Điều hòa ' : ''
+
+                htmlRoom = '<div class="row m-0 border border-5 rounded mb-2"><img src="' + room.images + '" style="width: 70%;overflow: hidden;" class="object-fit-cover p-0"><div style="width: 30%;" class="p-3">' 
                     + 'ID phòng: ' + room.room_id + '<br>'
                     + 'Diện tích: ' + room.area + '<br>'
-                    + 'Lượng người: ' + room.max_people + '<br>'
+                    + 'Số người ở tối đa: ' + room.max_people + '<br>'
                     + 'Địa chỉ: ' + room.detail_address + ', ' + room.street + ', ' + room.ward + ', ' + room.district + ', ' + room.city + ', ' + '<br>'
-                    + 'Giá thuê: ' + room.price + '<br>'
-                    + 'Giá điện: ' + room.electricity_price + '<br>'
-                    + 'Giá nước: ' + room.water_price + '<br>'
-                    + 'Tiện ích: ' 
+                    + 'Giá thuê: ' + room.price + 'đ<br>'
+                    + 'Giá điện: ' + room.electricity_price + 'đ/kmh<br>'
+                    + 'Giá nước: ' + room.water_price + 'đ/m3<br>'
+                    + 'Tiện ích: ' + TienIch
                     + '</div></div>'
-                    // + 'Tiện ích: ' + room. + '<br>'
                 $('#room').append(htmlRoom) 
             }
 

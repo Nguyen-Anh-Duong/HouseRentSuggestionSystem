@@ -18,67 +18,68 @@ html(lang='en')
                   .fs-5.mb-3  Tài chính (đồng) 
                   .col.input-group.mb-3
                     span.input-group-text  Từ
-                    input#price_start.form-control(type='number')
+                    input#price_start.form-control.reset(type='number')
                     span.input-group-text  Đến
-                    input#price_end.form-control(type='number')
+                    input#price_end.form-control.reset(type='number')
                     span.input-group-text  trọng số
-                    input#w1.form-control(type='number', style='max-width: 15%;')
+                    input#w1.form-control.reset(type='number', style='max-width: 15%;')
                 .row
                   .fs-5  Diện tích (m2) 
                   .col.input-group.mb-3
-                    input#area.form-control(type='number')
+                    input#area.form-control.reset(type='number')
                     span.input-group-text  trọng số
-                    input#w2.form-control(type='number', style='max-width: 15%;')
+                    input#w2.form-control.reset(type='number', style='max-width: 15%;')
                 .col
                   .fs-5  Số người ở 
                   .col.input-group.mb-3
-                    input#maxPeople.form-control(type='number')
+                    input#maxPeople.form-control.reset(type='number')
                     span.input-group-text  trọng số 
-                    input#w3.form-control(type='number', style='max-width: 15%;')
+                    input#w3.form-control.reset(type='number', style='max-width: 15%;')
                 .col
                   .fs-5  Gần vị trí
                   .col.input-group.mb-3
-                    input#adress.form-control(type='text')
+                    input#adress.form-control.reset(type='text')
                     span.input-group-text  trọng số
-                    input#w4.form-control(type='number', style='max-width: 15%;')
+                    input#w4.form-control.reset(type='number', style='max-width: 15%;')
               .col.ms-3
                 .fs-5.col.mb-3  Tiện ích 
+                
                 .input-group.mb-3
                   .input-group-text
-                    input#checkbox1.form-check-input.mt-0(type='checkbox', value='')
+                    input#checkbox1.form-check-input.mt-0.resetCheck(type='checkbox', value='')
                   span.input-group-text(style='min-width: 85%; max-width: 100%;')  Vệ sinh khép kín 
                 .input-group.mb-3
                   .input-group-text
-                    input#checkbox2.form-check-input.mt-0(type='checkbox', value='')
+                    input#checkbox2.form-check-input.mt-0.resetCheck(type='checkbox', value='')
                   span.input-group-text(style='min-width: 85%;')  Nội thất đầy đủ
                 .input-group.mb-3
                   .input-group-text
-                    input#checkbox3.form-check-input.mt-0(type='checkbox', value='')
+                    input#checkbox3.form-check-input.mt-0.resetCheck(type='checkbox', value='')
                   span.input-group-text(style='min-width: 85%;')  Bình nóng lạnh
                 .input-group.mb-3
                   .input-group-text
-                    input#checkbox4.form-check-input.mt-0(type='checkbox', value='')
+                    input#checkbox4.form-check-input.mt-0.resetCheck(type='checkbox', value='')
                   span.input-group-text(style='min-width: 85%;')  Điều hòa
                 .input-group.mb-3
                   .input-group-text
-                    input#checkbox5.form-check-input.mt-0(type='checkbox', value='')
+                    input#checkbox5.form-check-input.mt-0.resetCheck(type='checkbox', value='')
                   span.input-group-text(style='min-width: 85%;')  Wifi
                 .input-group.mb-3
                   .input-group-text
-                    input#checkbox6.form-check-input.mt-0(type='checkbox', value='')
+                    input#checkbox6.form-check-input.mt-0.resetCheck(type='checkbox', value='')
                   span.input-group-text(style='min-width: 85%;')  Chỗ nấu ăn
                 .input-group.mb-3
                   .input-group-text
-                    input#checkbox7.form-check-input.mt-0(type='checkbox', value='')
+                    input#checkbox7.form-check-input.mt-0.resetCheck(type='checkbox', value='')
                   span.input-group-text(style='min-width: 85%;')  Chỗ để xe
                 .input-group.mb-3
                   .input-group-text
-                    input#checkbox8.form-check-input.mt-0(type='checkbox', value='')
+                    input#checkbox8.form-check-input.mt-0.resetCheck(type='checkbox', value='')
                   span.input-group-text(style='min-width: 85%;')  Không chung chủ
-
-                .input-group.mb-3
+                .input-group.mb-3(style="left: 60%")
                   span.input-group-text  trọng số 
-                  input#w3.form-control(type='number', style='max-width: 15%;')
+                  input#w5.form-control(type='number', style='max-width: 15%;')
+                
             .d-flex.justify-content-center.mt-4
               .d-inline
                 button#reset.btn.btn-primary.m-2(type='button', style='width: 100px;')  Đặt lại 
@@ -92,11 +93,11 @@ html(lang='en')
                 td Giá thuê (đồng)
                 td Diện tích (m2)
                 td Lượng người
-                td Tiện ích
                 td Khoảng cách (km)
+                td Tiện ích Đáp ứng
                 td Giá điện
                 td Giá nước
-              tbody#bodyAttributeMatrix
+              tbody.resetResult#bodyAttributeMatrix
             h4.mt-4  Bảng ma trận ưa thích hơn
             
             ul.nav.nav-tabs
@@ -117,34 +118,36 @@ html(lang='en')
             .tab-content.mt-2
               #tab1.tab-pane.fade.show.active
                 table.table.table-bordered
-                  tbody#table1
+                  tbody#table1.resetResult
               #tab2.tab-pane.fade
                 table.table.table-bordered
-                  tbody#table2
+                  tbody#table2.resetResult
               #tab3.tab-pane.fade
                 table.table.table-bordered
-                  tbody#table3
+                  tbody#table3.resetResult
               #tab4.tab-pane.fade
                 table.table.table-bordered
-                  tbody#table4
+                  tbody#table4.resetResult
               #tab5.tab-pane.fade
                 table.table.table-bordered
-                  tbody#table5
+                  tbody#table5.resetResult
               #tab6.tab-pane.fade
                 table.table.table-bordered
-                  tbody#table6
+                  tbody#table6.resetResult
               #tab7.tab-pane.fade
                 table.table.table-bordered
-                  tbody#table7
+                  tbody#table7.resetResult
 
             h4.mt-4  Các dòng hơn cấp
-            table.table.table-bordered
-              tbody#table9
+            canvas#myChart.border.rounded
+            //- table.table.table-bordered
+            //-   tbody#table9.resetResult
 
             h4.mt-4  Kết quả
-            .col#room
+            .col#room.resetResult
 
     script(src='https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js', integrity='sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz', crossorigin='anonymous')
     script(src='https://code.jquery.com/jquery-3.6.0.min.js')
     script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
+    script(src="https://cdn.jsdelivr.net/npm/chart.js")
     script(src='dss.js')
