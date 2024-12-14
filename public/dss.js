@@ -169,11 +169,25 @@ $(function () {
             for (var i = 0; i < phi.phiPlus.length; i++){
                 names[i] = 'Phòng ' + (i+1)
             }
-            myChart.data.datasets[0].data.push(phi.phiPlus)
-            myChart.data.datasets[1].data.push(phi.phiMinus)
-            myChart.data.datasets[2].data.push(phi.netPhi)
-            myChart.data.labels.push(names)
-            myChart.update()
+
+            myChart.data.labels = names
+
+            myChart.data.datasets = [
+                {
+                    label: 'Dòng hơn cấp Dương',
+                    data: phi.phiPlus, 
+                    borderWidth: 1
+                }, 
+                {
+                    label: 'Dòng hơn cấp âm',
+                    data: phi.phiMinus, 
+                    borderWidth: 1
+                }, 
+                {
+                    label: 'Dòng hơn cấp chung',
+                    data: phi.netPhi,
+                    borderWidth: 1
+                }]
 
             for (var i = 0; i < rooms.length; i ++) {
                 var room = rooms[i]
