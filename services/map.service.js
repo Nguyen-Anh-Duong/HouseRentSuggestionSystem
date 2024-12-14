@@ -20,6 +20,7 @@ const calculateDistance = async function (origin, destination) {
   const data = await response.json();
   //const url = `https://rsapi.goong.io/direction?origin=${origin.latitude},${origin.longitude}&destination=${destination.latitude},${destination.longitude}&api_key=${api_key}`;
 
+
   return data.routes[0].legs[0].distance.value;
 };
 

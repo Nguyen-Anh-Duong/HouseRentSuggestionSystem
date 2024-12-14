@@ -34,7 +34,7 @@ router.post("/suggestion", async function (req, res, next) {
     features
   );
   // console.log(norRoom)
-  const data = calculatePromethee(norRoom, weigsht, priceRange);
+  const data = calculatePromethee(norRoom, weight, priceRange);
   console.log(data)
   res.json(data);
 });

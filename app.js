@@ -23,7 +23,51 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "jade");
 
 //init database
-require("./database/connect.db");
+const sequelize = require("./database/connect.db");
+
+const fs = require("fs/promises");
+ 
+const seedData = async (key,model) => {
+  try {
+    // Đọc file JSON
+    const filePath = path.join(__dirname, "datas", key);
+    const data = await fs.readFile(filePath, "utf8");
+ 
+    // Chuyển đổi JSON sang JavaScript Object
+    const users = await JSON.parse(data);
+    console.log(data.length);
+ 
+    // Đồng bộ lại bảng User (nếu cần)
+    await sequelize.sync({ force: true });
+ 
+    // Chèn dữ liệu từ JSON vào bảng User
+    await model.bulkCreate(users);
+ 
+    console.log("Data has been inserted successfully.");
+  } catch (error) {
+    console.error("Error while seeding data:", error);
+  }
+};
+
+const dbTables = {
+  "location.json": Location,
+  "feature.json": FeatureInfor,
+  "rent.json": RentInfor,
+  "user.json": User,
+  "room.json": Room,
+}
+
+async function loopthru(){
+  {
+  // Your code here
+  for (const [key, model] of Object.entries(dbTables)) {
+    await seedData(key, model);
+  }
+}
+}
+
+(async () => loopthru())();
+
 
 app.use(logger("dev"));
 app.use(express.json());
