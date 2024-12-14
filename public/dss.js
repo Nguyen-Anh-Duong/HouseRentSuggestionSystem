@@ -29,6 +29,36 @@ $(function () {
         $('.resetCheck').prop('checked', false)
     })
 
+    var myChart = new Chart($('#myChart'), {
+        type: 'bar',
+        data: {
+          labels: [],
+          datasets: [
+            {
+                label: 'Dòng hơn cấp Dương',
+                data: [],
+                borderWidth: 1
+            }, 
+            {
+                label: 'Dòng hơn cấp âm',
+                data: [],
+                borderWidth: 1
+            }, 
+            {
+                label: 'Dòng hơn cấp chung',
+                data: [],
+                borderWidth: 1
+            }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      })
+
     $('#submit').click(async function(){
         $('#solution').css('display','none');
         
@@ -139,36 +169,11 @@ $(function () {
             for (var i = 0; i < phi.phiPlus.length; i++){
                 names[i] = 'Phòng ' + (i+1)
             }
-
-            new Chart($('#myChart'), {
-                type: 'bar',
-                data: {
-                  labels: names,
-                  datasets: [
-                    {
-                        label: 'Dòng hơn cấp Dương',
-                        data: [0.5, 0.1], //phi.phiPlus,
-                        borderWidth: 1
-                    }, 
-                    {
-                        label: 'Dòng hơn cấp âm',
-                        data: [0.1, 0.5],//phi.phiMinus,
-                        borderWidth: 1
-                    }, 
-                    {
-                        label: 'Dòng hơn cấp chung',
-                        data: [0.4, -0.4],//phi.netPhi,
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                  scales: {
-                    y: {
-                      beginAtZero: true
-                    }
-                  }
-                }
-              })
+            myChart.data.datasets[0].data.push(phi.phiPlus)
+            myChart.data.datasets[1].data.push(phi.phiMinus)
+            myChart.data.datasets[2].data.push(phi.netPhi)
+            myChart.data.labels.push(names)
+            myChart.update()
 
             for (var i = 0; i < rooms.length; i ++) {
                 var room = rooms[i]
