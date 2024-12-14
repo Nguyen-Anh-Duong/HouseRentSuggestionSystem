@@ -11,6 +11,8 @@ $(function () {
     var adress = $('#adress')
     var w4 = $('#w4')
     var w5 = $('#w5')
+    var w6 = $('#w6')
+    var w7 = $('#w7')
     var checkbox1 = $('#checkbox1')
     var checkbox2 = $('#checkbox2')
     var checkbox3 = $('#checkbox3')
@@ -52,7 +54,7 @@ $(function () {
                             "park": checkbox7.is(":checked"),
                             "seperate": checkbox8.is(":checked")
                         }, 
-                        "weight": [w1.val(), w2.val(), w3.val(), w4.val(), w5.val()]
+                        "weight": [w1.val(), w2.val(), w3.val(), w4.val(), w5.val(), w6.val(), w7.val()]
                     })
                 });
             const data = await response.json()
@@ -143,17 +145,17 @@ $(function () {
                   datasets: [
                     {
                         label: 'Dòng hơn cấp Dương',
-                        data: phi.phiPlus,
+                        data: [0.5, 0.1], //phi.phiPlus,
                         borderWidth: 1
                     }, 
                     {
                         label: 'Dòng hơn cấp âm',
-                        data: phi.phiMinus,
+                        data: [0.1, 0.5],//phi.phiMinus,
                         borderWidth: 1
                     }, 
                     {
                         label: 'Dòng hơn cấp chung',
-                        data: phi.netPhi,
+                        data: [0.4, -0.4],//phi.netPhi,
                         borderWidth: 1
                     }]
                 },
