@@ -6,7 +6,7 @@ var sequelize = new Sequelize({
   dialect: process.env.DB_DIALECT || "mysql",
   database: process.env.DB_NAME || "HouseRent",
   username: process.env.DB_USERNAME || "root",
-  password: process.env.DB_PASSWORD || "123456",
+  password: process.env.DB_PASSWORD || "namhonda123",
   port: process.env.DB_PORT || 3306,
   define: {
     freezeTableName: true,
@@ -25,7 +25,6 @@ sequelize
   .authenticate()
   .then(() => {
     console.log("Connection has been established successfully.");
-    return sequelize.sync({ force: false });
   })
   .then(() => {
     console.log("Database synchronized.");
