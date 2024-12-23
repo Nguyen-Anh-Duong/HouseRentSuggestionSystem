@@ -16,9 +16,9 @@ const Utype = function (a, b, q){
 
 const LevelType = function(a,b){
   if (a - b <= 0) return 0;
-  else if(a - b <= 1) return 0.25;
-  else if( a - b <= 2) return 0.5;
-  else if( a - b <= 3) return 0.75;
+  else if(a - b <= 1000) return 0.25;
+  else if( a - b <= 2000) return 0.5;
+  else if( a - b <= 3000) return 0.75;
   else return 1;
 }
 
@@ -28,8 +28,8 @@ const diffFunctions = {
   max_people: (a, b) => Utype(a,b, 1), // Số người tối đa (nhiều người hơn tốt hơn)
   distance: (a, b) => LevelType(-a,-b), // Khoảng cách (ngắn hơn tốt hơn)
   feature_satisfied: (a, b) => Binary(a, b), // Đặc điểm (được thỏa mãn nhiều hơn tốt hơn)
-  electricity_price: (a, b) => Utype(-a,-b, 2000),
-  water_price: (a, b) => Utype(-a,-b, 2000)
+  electricity_price: (a, b) => Utype(-a,-b, 1000),
+  water_price: (a, b) => Utype(-a,-b, 10000)
 };
 
 const calculatePromethee = function (normalizedRooms, criteriaWeights, priceRange) {
@@ -98,6 +98,8 @@ const calculatePromethee = function (normalizedRooms, criteriaWeights, priceRang
   const netPhi = phiPlus.map(
     (positivePhi, index) => positivePhi - phiMinus[index]
   );
+
+  console.log("hhhhhhhhhhhhhhhhh" , preferenceMatrix);
 
   return {
     rooms: normalizedRooms,

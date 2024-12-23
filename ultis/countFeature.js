@@ -2,7 +2,7 @@ const countMatchingFeatures = function (room, requireFeature) {
   let count = 0;
   for (const key in requireFeature) {
     if (requireFeature[key] == true) {
-      room[key] == true ? count++ : count;
+      room[key] == 1 ? count++ : count;
     }
   }
   return count;

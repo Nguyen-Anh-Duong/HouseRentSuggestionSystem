@@ -3,6 +3,7 @@ const countMatchingFeatures = require("./countFeature");
 
 //chuan hoa mot so gia tri
 const normalizeRooms = async function (rooms, userLocation, requiredFeatures) {
+  console.log(requiredFeatures)
   const normalizedRooms = await Promise.all(
     rooms.map(async (room) => {
       const roomDistance = await calculateDistance(userLocation, {

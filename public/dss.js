@@ -112,30 +112,21 @@ $(function () {
 
             console.log(preferenceMatrix)
 
-            var priceHtml = ''
-            var areaHtml = ''
-            var maxPeopleHtml = ''
-            var distanceHtml = ''
-            var featureHtml = ''
+            var str = '<tr><td></td>'
 
-                priceHtml = priceHtml + '<tr><td></td>'
-                areaHtml = areaHtml + '<tr><td></td>'
-                maxPeopleHtml = maxPeopleHtml + '<tr><td></td>'
-                distanceHtml = distanceHtml + '<tr><td></td>'
-                featureHtml = featureHtml + '<tr><td></td>'
             for (var i = 0; i < preferenceMatrix.length; i ++){
-                priceHtml = priceHtml + '<td>Phòng ' + (i+1) + '</td>'
-                areaHtml = areaHtml + '<td>Phòng ' + (i+1) + '</td>'
-                maxPeopleHtml = maxPeopleHtml + '<td>Phòng ' + (i+1) + '</td>'
-                distanceHtml = distanceHtml + '<td>Phòng ' + (i+1) + '</td>'
-                featureHtml = featureHtml + '<td>Phòng ' + (i+1) + '</td>'
+                str = str + '<td>Phòng ' + (i+1) + '</td>'
             }
 
-                priceHtml = priceHtml + '</tr>'
-                areaHtml = areaHtml + '</tr>'
-                maxPeopleHtml = maxPeopleHtml + '</tr>'
-                distanceHtml = distanceHtml + '</tr>'
-                featureHtml = featureHtml + '</tr>'
+            str = str + '</tr>'
+
+            var priceHtml = str
+            var areaHtml = str
+            var maxPeopleHtml = str
+            var distanceHtml = str
+            var featureHtml = str
+            var elecHtml = str
+            var waterHtml = str
             
             for (var i = 0; i < preferenceMatrix.length; i ++){
                 priceHtml = priceHtml + '<tr><td>Phòng ' + (i+1) + '</td>'
@@ -143,18 +134,25 @@ $(function () {
                 maxPeopleHtml = maxPeopleHtml + '<tr><td>Phòng ' + (i+1) + '</td>'
                 distanceHtml = distanceHtml + '<tr><td>Phòng ' + (i+1) + '</td>'
                 featureHtml = featureHtml + '<tr><td>Phòng ' + (i+1) + '</td>'
+                elecHtml = elecHtml + '<tr><td>Phòng ' + (i+1) + '</td>'
+                waterHtml = waterHtml + '<tr><td>Phòng ' + (i+1) + '</td>'
+
                 for (var j = 0;j < preferenceMatrix.length; j++){
                     priceHtml = priceHtml + '<td>' + preferenceMatrix[i][j].price + '</td>'
                     areaHtml = areaHtml + '<td>' + preferenceMatrix[i][j].area + '</td>'
                     maxPeopleHtml = maxPeopleHtml + '<td>' + preferenceMatrix[i][j].max_people + '</td>'
                     distanceHtml = distanceHtml + '<td>' + preferenceMatrix[i][j].distance + '</td>'
                     featureHtml = featureHtml + '<td>' + preferenceMatrix[i][j].feature_satisfied + '</td>'
+                    elecHtml = elecHtml + '<td>' + preferenceMatrix[i][j].electricity_price + '</td>'
+                    waterHtml = waterHtml + '<td>' + preferenceMatrix[i][j].water_price + '</td>'
                 }
                 priceHtml = priceHtml + '</tr>'
                 areaHtml = areaHtml + '</tr>'
                 maxPeopleHtml = maxPeopleHtml + '</tr>'
                 distanceHtml = distanceHtml + '</tr>'
                 featureHtml = featureHtml + '</tr>'
+                elecHtml = elecHtml + '</tr>'
+                waterHtml = waterHtml + '</tr>'
             }
 
             $('#table1').append(priceHtml)
@@ -162,8 +160,8 @@ $(function () {
             $('#table3').append(maxPeopleHtml)
             $('#table4').append(featureHtml)
             $('#table5').append(distanceHtml)
-            $('#table6').append(areaHtml)
-            $('#table7').append(areaHtml)
+            $('#table6').append(elecHtml)
+            $('#table7').append(waterHtml)
 
             var names = [phi.phiPlus.length]
             for (var i = 0; i < phi.phiPlus.length; i++){

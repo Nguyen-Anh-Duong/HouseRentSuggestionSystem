@@ -50,6 +50,6 @@ var Room = sequelize.define("room", {
     },
   },
 });
-console.log(Room.associations);
+
 
 module.exports = Room;
